@@ -1,0 +1,22 @@
+@CHARSET "ISO-8859-1";
+body{
+	font-family: Century Gothic;
+}
+#div_input{
+	padding: 10px;
+	height: 100px;
+	width: 400px;
+}
+#div_output{
+	padding: 10px;
+	height: 200px;
+	width: 400px;
+	background-color: #eee; 
+}
+input[type='text']{
+	padding:0px 5px 0px 5px; 
+}
+.x-span{
+	cursor:pointer;
+	padding: 0px 3px;
+}
