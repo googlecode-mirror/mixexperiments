@@ -1,12 +1,28 @@
 <?php
 	include_once 'resize-class.php';
+	include_once 'config.php';
+	$obj = new CONFIG();
+	$con = $obj->ConnectionOpen();
+
 	if(isset($_POST['path']) && $_POST['path']!=''){
-		echo $_POST['path']."<br>";
 		$path = $_POST['path'];
-		if ($handle = opendir($path)) {
+		$query = 'select * from products_book';
+		$res = mysql_query($query);
+		while($row = mysql_fetch_assoc($res)){
+			$id = $row['products_book_id'];
+			$filename = $path."/".$id.".jpg";
+			if(file_exists($filename)){
+				
+				echo "File Exist<br/>";
+			}else{
+				echo "File Not Found<br/>";
+			}
+		}
+	}
+	$obj->ConnectionClose();
+	/*if ($handle = opendir($path)) {
 		    //echo "Directory handle: $handle\n";
 		
-		    /* This is the correct way to loop over the directory. */
 		    while (false !== ($file = readdir($handle))) {
 		        if ($file != "." && $file != "..") {
 		            //echo "$file<br/>";
@@ -34,6 +50,5 @@
 		    closedir($handle);
 		}else{
 			echo "Directory Does Not Exist<br>";
-		}
-	}
+		}*/
 ?>
