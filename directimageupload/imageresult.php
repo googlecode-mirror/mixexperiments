@@ -1,54 +1,79 @@
 <?php
 	include_once 'resize-class.php';
 	include_once 'config.php';
-	$obj = new CONFIG();
+	include_once 'core.php';
+	
+	$obj = new CORE();
 	$con = $obj->ConnectionOpen();
-
-	if(isset($_POST['path']) && $_POST['path']!=''){
+	if(isset($_POST['submit_form']) && $_POST['submit_form']!=''){
+		$segment = $_POST['segment'];
 		$path = $_POST['path'];
-		$query = 'select * from products_book';
-		$res = mysql_query($query);
-		while($row = mysql_fetch_assoc($res)){
-			$id = $row['products_book_id'];
-			$filename = $path."/".$id.".jpg";
-			if(file_exists($filename)){
-				
-				echo "File Exist<br/>";
-			}else{
-				echo "File Not Found<br/>";
-			}
-		}
-	}
-	$obj->ConnectionClose();
-	/*if ($handle = opendir($path)) {
-		    //echo "Directory handle: $handle\n";
+		$table = 'products_'.$segment;
+		$name_column = $segment.'_name';
+		$id = $table.'_id';
 		
+		$path = $_POST['path'];
+		if ($handle = opendir($path)) {
+
+			echo "<table cellpadding='5'>";
 		    while (false !== ($file = readdir($handle))) {
+				echo '<tr>';
 		        if ($file != "." && $file != "..") {
-		            //echo "$file<br/>";
 		            $filename = $path."/".$file;
-		            $fh = fopen($filename, "r");
-		            $content = fread($fh,filesize($filename));
-		            //content = strip_tags($content);
-		            	$copy=@copy($_FILES["file"]["tmp_name"],"../../../upload/".$postpix.$_FILES["file"]["name"]);
-						$image=array(0=>array("path"=>'upload/book/'.$name.'_35x35',"width"=>30,"height"=>35,"option"=>"crop"),
-									 1=>array("path"=>'upload/book/'.$name.'_60x60',"width"=>60,"height"=>60,"option"=>"crop"),
-									 2=>array("path"=>'upload/book/'.$name.'_100x100',"width"=>100,"height"=>100,"option"=>"crop"),
-									 3=>array("path"=>'upload/book/'.$name.'_225x225',"width"=>225,"height"=>225,"option"=>"crop"),
-									 4=>array("path"=>'upload/book/'.$name.'_400x400',"width"=>400,"height"=>400,"option"=>"crop")
-									);
-				        for($i=0;$i<count($image);$i++) {
-							$resizeObj = new resize('upload/'.$filename);
-							$resizeObj -> resizeImage($image[$i]["width"], $image[$i]["height"], 'crop');
-							$resizeObj -> saveImage($image[$i]["path"].".jpg", 100);
-						}
-		            fclose($fh);
-		            @unlink("temp/$file");
-		            echo $filename."<br/><hr/><br/>";
+		            
+		            echo "<td>$filename</td>";
+		            $image_name_array = explode('.', $file);
+		            $image_name = "";
+		            for($i=0;$i<sizeof($image_name_array)-1;$i++){
+		            	$image_name .= $image_name_array[$i];
+		            }
+		            $extension = ".".$image_name_array[sizeof($image_name_array)-1];
+		            echo "<td>$image_name</td>";
+		            $query = "select * from $table where $id='$image_name'";
+		            //$query = "select * from $table where isbn_13='$image_name'";
+		            $result = mysql_query($query) or die(mysql_error());
+		            $num_rows = mysql_num_rows($result);
+		            if($num_rows==1){
+		            	$product_data = mysql_fetch_assoc($result);
+		            	$product_name = $product_data[$segment.'_name'];
+		            	$new_name = "";
+		            	$new_name = $obj->ImageNamingFormat($product_name);
+		            	$new_name .= $extension;
+		            	$update_query = "update products_$segment set image = '$new_name' where $id='$image_name'";
+		            	$update = mysql_query($update_query); 
+		            	$copy=copy($filename,"temp/".$new_name);
+		            	if(is_dir("upload/$segment")){
+		            		echo "<td  style='color:green'>$segment: Directory Ok</td>";
+			            	$image=array(0=>array("path"=>'upload/'.$segment.'/'.$new_name.'_30x40',"width"=>30,"height"=>40,"option"=>"crop"),
+										 1=>array("path"=>'upload/'.$segment.'/'.$new_name.'_60x80',"width"=>60,"height"=>80,"option"=>"crop"),
+										 2=>array("path"=>'upload/'.$segment.'/'.$new_name.'_120x160',"width"=>120,"height"=>160,"option"=>"crop"),
+										 3=>array("path"=>'upload/'.$segment.'/'.$new_name.'_220x290',"width"=>220,"height"=>290,"option"=>"crop"),
+										 4=>array("path"=>'upload/'.$segment.'/'.$new_name.'_520x690',"width"=>520,"height"=>690,"option"=>"crop")
+										);
+					        for($i=0;$i<count($image);$i++) {
+								$resizeObj = new resize('temp/'.$new_name);
+								$resizeObj -> resizeImage($image[$i]["width"], $image[$i]["height"], 'crop');
+								$resizeObj -> saveImage($image[$i]["path"].".jpg", 100);
+							}
+		            	}else{
+		            		echo "<td style='color:red'>$segment: No Such Directory</td>";
+		            		exit;
+		            	}
+		            	echo "<td>$product_name</td>";
+		            	echo "<td style='color:green'>Yes</td>";
+		            }else{
+		            	echo "<td>---</td>";
+		            	echo "<td style='color:red'>No</td>";
+		            }
+		            @unlink("temp/$new_name");
 		        }
+				echo '</tr>';
 		    }
+			echo '</table>';
 		    closedir($handle);
 		}else{
 			echo "Directory Does Not Exist<br>";
-		}*/
+		}
+	}
+	$con = $obj->ConnectionClose();
 ?>
