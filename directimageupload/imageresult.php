@@ -1,24 +1,42 @@
+<html>
+<head>
+	<title> Image Upload Result </title>
+	<script type="text/javascript" src="js/jquery-1.4.4.js"></script>
+</head>
+<body>
 <?php
 	include_once 'resize-class.php';
 	include_once 'config.php';
 	include_once 'core.php';
-	
+	ini_set('memory_limit', '-1');
+	set_time_limit(0);
 	$obj = new CORE();
 	$con = $obj->ConnectionOpen();
-	if(isset($_POST['submit_form']) && $_POST['submit_form']!=''){
-		$segment = $_POST['segment'];
-		$path = $_POST['path'];
-		$table = 'products_'.$segment;
-		$name_column = $segment.'_name';
-		$id = $table.'_id';
+	if(isset($_POST) && $_POST!=''){
 		
+		$segment = trim($_POST['segment']);
+		$table = 'products_'.$segment;
+		$dbcolumn = trim($_POST['dbcolumn']);
+		
+		$path = trim($_POST['path']);
+		$imagesizes = trim($_POST['imagesizes']);
+	
 		$path = $_POST['path'];
 		if ($handle = opendir($path)) {
 
-			echo "<table cellpadding='5'>";
+			echo "<div id='uploadresult'><table cellpadding='5' width='100%'>";
+			echo "<tr>";
+			echo "<th>Source Image</th>";
+			echo "<th>Renmaed As</th>";
+			echo "<th>Product ID</th>";
+			echo "<th>Product Name</th>";
+			echo "<th>Copy Status</th>";
+			echo "</tr>";
+			
 		    while (false !== ($file = readdir($handle))) {
-				echo '<tr>';
+		    	
 		        if ($file != "." && $file != "..") {
+		        	echo '<tr>';
 		            $filename = $path."/".$file;
 		            
 		            echo "<td>$filename</td>";
@@ -28,48 +46,65 @@
 		            	$image_name .= $image_name_array[$i];
 		            }
 		            $extension = ".".$image_name_array[sizeof($image_name_array)-1];
-		            echo "<td>$image_name</td>";
-		            $query = "select * from $table where $id='$image_name'";
-		            //$query = "select * from $table where isbn_13='$image_name'";
+		            $query = "select * from $table where $dbcolumn='$image_name'";
+		            
 		            $result = mysql_query($query) or die(mysql_error());
 		            $num_rows = mysql_num_rows($result);
 		            if($num_rows==1){
 		            	$product_data = mysql_fetch_assoc($result);
-		            	$product_name = $product_data[$segment.'_name'];
+		            	$prodct_id = $product_data[$table.'_id'];
+		            	$product_name = trim($product_data[$segment.'_name']);
 		            	$new_name = "";
 		            	$new_name = $obj->ImageNamingFormat($product_name);
-		            	$new_name .= $extension;
-		            	$update_query = "update products_$segment set image = '$new_name' where $id='$image_name'";
+		            	$setimage = $new_name.$extension;
+		            	$update_query = "update $table set image = '$setimage' where $dbcolumn='$image_name'";
 		            	$update = mysql_query($update_query); 
-		            	$copy=copy($filename,"temp/".$new_name);
-		            	if(is_dir("upload/$segment")){
-		            		echo "<td  style='color:green'>$segment: Directory Ok</td>";
-			            	$image=array(0=>array("path"=>'upload/'.$segment.'/'.$new_name.'_30x40',"width"=>30,"height"=>40,"option"=>"crop"),
-										 1=>array("path"=>'upload/'.$segment.'/'.$new_name.'_60x80',"width"=>60,"height"=>80,"option"=>"crop"),
-										 2=>array("path"=>'upload/'.$segment.'/'.$new_name.'_120x160',"width"=>120,"height"=>160,"option"=>"crop"),
-										 3=>array("path"=>'upload/'.$segment.'/'.$new_name.'_220x290',"width"=>220,"height"=>290,"option"=>"crop"),
-										 4=>array("path"=>'upload/'.$segment.'/'.$new_name.'_520x690',"width"=>520,"height"=>690,"option"=>"crop")
-										);
-					        for($i=0;$i<count($image);$i++) {
-								$resizeObj = new resize('temp/'.$new_name);
-								$resizeObj -> resizeImage($image[$i]["width"], $image[$i]["height"], 'crop');
-								$resizeObj -> saveImage($image[$i]["path"].".jpg", 100);
-							}
+		            	if(!copy($filename,"temp/".$setimage)){
+							echo "<td style='color:red'><b>$file</b> failed to copy as <b>$setimage</b></td>";		            		
 		            	}else{
-		            		echo "<td style='color:red'>$segment: No Such Directory</td>";
-		            		exit;
+			            	if(is_dir("upload/$segment")){
+			            		$imagesizes_array = explode(',', $imagesizes);
+			            		if(sizeof($imagesizes_array)>=1){
+			            			
+				            		for($i=0;$i<sizeof($imagesizes_array);$i++){
+				            			$xy = array();
+				            			if($imagesizes_array[$i]!=''){
+				            				$xy = explode('x', $imagesizes_array[$i]);
+				            				$x = (int)trim($xy[0]);
+				            				$y = (int)trim($xy[1]);
+				            				$image[$i] = array(
+															"path"=>'upload/'.$segment.'/'.$new_name.'_'.$imagesizes_array[$i],
+			            									"width"=>$x,
+															"height"=>$y,
+															"option"=>"crop"
+													);
+				            			}
+				            		}
+							        for($i=0;$i<count($image);$i++) {
+										$resizeObj = new resize('temp/'.$setimage);
+										$resizeObj -> resizeImage($image[$i]["width"], $image[$i]["height"], 'crop');
+										$resizeObj -> saveImage($image[$i]["path"].".jpg", 100);
+									}
+			            		}
+			            	}else{
+			            		echo "<td style='color:red'>$segment: No Such Directory</td>";
+			            		exit;
+			            	}
+			            	echo "<td style='color:green;'><b>$file</b> copied as <br><b>$setimage</b> Successfully</td>";
+			            	unlink("temp/$setimage");
 		            	}
+		            	echo "<td>$prodct_id</td>";
 		            	echo "<td>$product_name</td>";
 		            	echo "<td style='color:green'>Yes</td>";
 		            }else{
 		            	echo "<td>---</td>";
+		            	echo "<td>---</td>";
 		            	echo "<td style='color:red'>No</td>";
 		            }
-		            @unlink("temp/$new_name");
+		            echo '</tr>';
 		        }
-				echo '</tr>';
 		    }
-			echo '</table>';
+			echo '</table></div>';
 		    closedir($handle);
 		}else{
 			echo "Directory Does Not Exist<br>";
@@ -77,3 +112,6 @@
 	}
 	$con = $obj->ConnectionClose();
 ?>
+<a href="imageresultexport.php">Export To Excel</a>
+</body>
+</html>
