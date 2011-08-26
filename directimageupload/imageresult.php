@@ -19,9 +19,9 @@
 		$dbcolumn = trim($_POST['dbcolumn']);
 		
 		$path = trim($_POST['path']);
+		$destination = 'upload/'.$segment.'/';
 		$imagesizes = trim($_POST['imagesizes']);
 	
-		$path = $_POST['path'];
 		if ($handle = opendir($path)) {
 
 			echo "<div id='uploadresult'><table cellpadding='5' width='100%'>";
@@ -73,13 +73,18 @@
 				            				$x = (int)trim($xy[0]);
 				            				$y = (int)trim($xy[1]);
 				            				$image[$i] = array(
-															"path"=>'upload/'.$segment.'/'.$new_name.'_'.$imagesizes_array[$i],
+															"path"=>$destination.$new_name.'_'.$imagesizes_array[$i],
 			            									"width"=>$x,
 															"height"=>$y,
 															"option"=>"crop"
 													);
 				            			}
 				            		}
+				            		$created_by = $modify_by ='1';
+				            		$created_on = $modify_on = date('Y-m-d h:i:s');
+				            		$image_field = array('segment','product_table','product_table_column','product_master_id','product_name','source_path','source_file_name','destination_path','destination_file_name','image_sizes','created_by','created_on','modify_by','modify_on');
+				            		$image_data = array('segment'=>$segment,'product_table'=>$table,'product_table_column'=>$dbcolumn,'product_master_id'=>$prodct_id,'product_name'=>$product_name,'source_path'=>$path,'source_file_name'=>$file,'destination_path'=>$destination,'destination_file_name'=>$setimage,'image_sizes'=>$imagesizes,'created_by'=>$created_by,'created_on'=>$created_on,'modify_by'=>$modify_by,'modify_on'=>$modify_on);
+				            		$insert = $obj->InsertSimple('direct_image_upload', $image_field, $image_data, 0, '', '', 0);
 							        for($i=0;$i<count($image);$i++) {
 										$resizeObj = new resize('temp/'.$setimage);
 										$resizeObj -> resizeImage($image[$i]["width"], $image[$i]["height"], 'crop');
@@ -112,6 +117,5 @@
 	}
 	$con = $obj->ConnectionClose();
 ?>
-<a href="imageresultexport.php">Export To Excel</a>
 </body>
 </html>

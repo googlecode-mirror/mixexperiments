@@ -44,4 +44,39 @@ class CORE extends CONFIG{
 						print_r($array);
 						echo '</pre>';
 	}
+	public function InsertSimple($table,$f,$d,$image_status,$image_field,$image_value,$status) { 
+						for($i=0;$i<count($f);$i++) {
+							if($image_status == '1' && $f[$i] == $image_field) {
+								$str[]="'".$image_value."'";
+								$parameters[]=($image_field);
+							} else {
+								if(count($d[$f[$i]]) >1) { 
+									$data_arr=implode(',',$d[$f[$i]]);
+								} else { 
+									$data_arr=$d[$f[$i]];
+								}
+								$str[]="'".$this->DataFilter($data_arr)."'";
+								$parameters[]=$f[$i];
+							}
+						}
+						$sql="insert into $table (".implode(',',$parameters).") values (".implode(',',$str).")";
+//						echo $sql; 
+//						exit;
+						$res=mysql_query($sql);
+						$id=mysql_insert_id();
+							if($res) {
+								if($status == '1') {
+									return $id;
+								} else {
+									return true;
+								}
+							} else {
+								return false;
+							}
+					}
+	public function DataFilter($data){
+						$this->ConnectionOpen();
+						$data1=mysql_real_escape_string(trim($data));
+						return $data1;
+					}
 }
