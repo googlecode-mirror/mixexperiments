@@ -10,6 +10,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 	$segment = trim($_POST['segment']);
 	$dbcolumn = trim($_POST['dbcolumn']);
 	$path = trim($_POST['path']);
+	$desti_path = trim($_POST['desti_path']);
 	$imagesizes = trim($_POST['imagesizes']);
 	
 	//Gathering Other validation data
@@ -27,6 +28,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 	
 	$response['data']['dbcolumn'] = $val->IsValueInArray($dbcolumn, $dbcolumns);
 	$response['data']['path'] = $val->IsValidPath($path);
+	$response['data']['desti_path'] = $val->IsValidPath($desti_path);
 	$response['data']['imagesizes'] = $val->RegexValidation($imagesizes, '/^[0-9x,]{1,100}$/');
 	if($val->CheckResponseArray($response)){
 		$response['validation']['status'] = 'successful';

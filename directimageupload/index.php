@@ -23,6 +23,17 @@ p,.imp{
 						sizescsv = sizes.replace(/\n\r?/g,',');
 						document.getElementById('imagesizes').value = sizescsv;
 					};
+
+	GetTableFields = function (id,value){
+						$.ajax({
+							url:'control/ajaxprocess.php',
+							type:'post',
+							data:'act=getfield&table='+value,
+							success:function(response){
+								$('#'+id).html(response);
+							}
+						});
+					};
 </script>	
 </head>
 <body>
@@ -47,6 +58,27 @@ p,.imp{
 			<td><p id='segment_error'></p></td>
 		</tr>
 		<tr>
+			<td>Table: </td>
+			<td>
+				<select name='table' id='table' onchange="GetTableFields('table_fields',this.value);">
+				<?php 
+					$tables = $obj->FetchTables($obj->GetDb(), "products_%",array());
+					echo $obj->GenerateOptions($tables, array());
+				?>
+				</select>
+			</td>
+			<td><p id='segment_error'></p></td>
+		</tr>
+		<tr>
+			<td>Table Fields: </td>
+			<td>
+				<select name='table_fields' id='table_fields'>
+					<option value="">-- Select --</option>
+				</select>
+			</td>
+			<td><p id='segment_error'></p></td>
+		</tr>
+		<tr>
 			<td>DB Column: </td>
 			<td>
 				<input type="text" name='dbcolumn' id='dbcolumn' errortag='DB column'/>
@@ -59,11 +91,18 @@ p,.imp{
 			<td colspan="2">Note: Segment respected DB Table column <br/>matching image name e.g. products_book_id</td>
 		</tr>
 		<tr>
-			<td>Path: </td>
+			<td>Source Path: </td>
 			<td>
 				<input type="text" name='path' id='path' errortag='Path'/>
 			</td>
 			<td><p id='path_error'></p></td>
+		</tr>
+		<tr>
+			<td>Destination Path: </td>
+			<td>
+				<input type="text" name='desti_path' id='desti_path' errortag='Destination Path'/>
+			</td>
+			<td><p id='desti_path_error'></p></td>
 		</tr>
 		<tr>
 			<td>Image Size: </td>

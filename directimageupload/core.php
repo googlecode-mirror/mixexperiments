@@ -7,13 +7,21 @@ class CORE extends CONFIG{
 						return strtolower($new_data);
 					}
 					
-	public function FetchTables($database,$neglect) { 
+	public function FetchTables($database,$condition,$neglect) { 
 						$this->ConnectionOpen();
-						$sql="SHOW TABLES FROM $database";
+						if($condition==''){
+							$sql="SHOW TABLES FROM $database";
+						}else{
+							$sql="SHOW TABLES FROM $database like '$condition'";
+						}
 						//echo $sql;exit;
 						$res=mysql_query($sql);
 							while($data=@mysql_fetch_assoc($res)) {
-								$table[]=$data["Tables_in_".$database];
+								if($condition==''){
+									$table[]=$data["Tables_in_".$database];
+								}else{
+									$table[]=$data["Tables_in_".$database." ($condition)"];
+								}
 							}
 						$this->ConnectionClose();
 						for($i=0;$i<count($table);$i++) {
@@ -79,4 +87,17 @@ class CORE extends CONFIG{
 						$data1=mysql_real_escape_string(trim($data));
 						return $data1;
 					}
+	function GenerateOptions($key = array(),$value = array()){
+		$options = array();
+		if($value == '' || sizeof($value)==0){
+			$options = array_combine($key, $key);
+		}else{
+			$options = array_combine($key, $$value);
+		}
+		$opt_str = "<option value=''>-- Select --</option>";
+		foreach ($options as $k=>$v){
+			$opt_str .= "<option value='$k'>$v</option>";
+		}
+		return $opt_str; 
+	}
 }

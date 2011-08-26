@@ -19,7 +19,7 @@
 		$dbcolumn = trim($_POST['dbcolumn']);
 		
 		$path = trim($_POST['path']);
-		$destination = 'upload/'.$segment.'/';
+		$destination = trim($_POST['desti_path']).'/';
 		$imagesizes = trim($_POST['imagesizes']);
 	
 		if ($handle = opendir($path)) {
