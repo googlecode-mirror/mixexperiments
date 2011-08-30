@@ -1,0 +1,34 @@
+div.pagination {
+padding: 5px;
+margin: 5px;
+text-align:center;
+}
+
+div.pagination a {
+padding: 2px 5px 2px 5px;
+margin: 2px;
+border: 1px solid #AAAADD;
+font-size: 13px;
+text-decoration: none; /* no underline */
+color: #423C7B;
+}
+div.pagination a:hover, div.digg a:active {
+border: 1px solid #423C7B;
+color: #423C7B;
+}
+div.pagination span.current {
+padding: 2px 5px 2px 5px;
+margin: 2px;
+border: 1px solid #423C7B;
+font-size: 13px;
+font-weight: bold;
+background-color: #423C7B;
+color: #FFF;
+}
+div.pagination span.disabled {
+padding: 2px 5px 2px 5px;
+margin: 2px;
+border: 1px solid #EEE;
+font-size: 13px;
+color: #DDD;
+}

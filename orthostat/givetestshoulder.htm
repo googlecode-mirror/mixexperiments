@@ -1,0 +1,800 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+
+
+	<title>Orthostat</title>
+	<link rel="stylesheet" type="text/css" href="givetestshoulder_files/orthostate.css">
+<link rel="stylesheet" type="text/css" href="givetestshoulder_files/jquery-ui-1.css">
+<link rel="stylesheet" type="text/css" href="givetestshoulder_files/jquery.css">
+<link rel="stylesheet" type="text/css" href="givetestshoulder_files/jquery_002.css">
+<link rel="stylesheet" type="text/css" href="givetestshoulder_files/jquery_003.css">
+<link href="givetestshoulder_files/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="givetestshoulder_files/jquery-1.js"></script>
+<script type="text/javascript" src="givetestshoulder_files/jquery-ui-1.js"></script>
+<script type="text/javascript" src="givetestshoulder_files/jquery_003.js"></script>
+<script type="text/javascript" src="givetestshoulder_files/jquery_002.js"></script>
+<script type="text/javascript" src="givetestshoulder_files/jquery_004.js"></script>
+<script type="text/javascript" src="givetestshoulder_files/jquery.js"></script>
+<script type="text/javascript" src="givetestshoulder_files/crud.js"></script>
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">	<!--[if IE]>
+	<style>
+	.fixed_div{
+		position: fixed;
+		top:220px;
+		right:70px;
+		line-height:25px;
+		width:110px;
+		background-color: #fff;
+		font-size: 13px;
+		font-weight: bold;
+		font-family: Lucida Sans Unicode,Arial;
+	}
+	</style>
+	<![endif]-->
+	
+	<script type="text/javascript">
+		var score_values = new Array();
+		
+		window.onload = function(){
+
+			$(".fixed_div").mouseenter(function() {
+			    $(this).animate({ backgroundColor: "#FFB93F" }, "slow");
+			});
+			$(".fixed_div").mouseleave(function() {
+			    $(this).animate({ backgroundColor: "#FFF" }, "slow");
+			});
+
+			clearForm('exam_form');
+			document.getElementById('sum').value = "0";
+
+			$('a[href=#top]').click(function(){
+		        $('html, body').animate({scrollTop:0}, 'slow');
+		        return false;
+		    });
+		};
+
+		function updateScore(element,i){
+			
+			value = element.value;
+			i = parseInt(i);
+			var temp = "";
+
+			var color = document.getElementById("question_answer_"+i).style.backgroundColor;
+			
+			$("#question_answer_"+i).animate({ backgroundColor: "#FFF" }, "slow");
+			
+			mixed_data = value.split(",");
+			question_id = mixed_data[0];
+			question_id = parseInt(question_id);
+			
+			option_id = mixed_data[1];
+			option_id = parseInt(option_id);
+
+			score_val = mixed_data[2];
+			score_val = parseInt(score_val);
+
+			sum = parseInt(document.getElementById('sum').value);
+			
+			if(score_values[i]==null || score_values[i]==""){
+				
+				score_values[i] = score_val;
+				sum = sum+score_val;
+			}
+			else{
+				temp = score_values[i];
+				score_values[i] = score_val;
+				sum = sum-temp+score_val;
+			}
+			document.getElementById('sum').value = sum;
+			document.getElementById('div_score').innerHTML = sum;
+			document.getElementById('fixed_div_score').innerHTML = sum;
+			//blink('fixed_div_score');
+		}
+
+		function blink(id){
+			$("#"+id).animate({ backgroundColor: "#FFB93F" }, "slow");
+			$("#"+id).animate({ backgroundColor: "#fff" }, "slow");
+		}
+
+		function checkAndSave(){
+		   	
+		   	$('#done').click(function(){
+		        $('html, body').animate({scrollTop:0}, 'slow');
+		        return false;
+		    });
+			saveForm('checkexamanswers.php','exam_form','1');
+			
+		}
+	</script>
+</head><body>
+<div align="center">
+	<div class="header">
+		<div class="logo">
+		<div class="logo1" onclick="window.location='/orthostat/'" style="cursor: pointer;">&nbsp;</div>
+	<div class="email" id="logged_user">
+		<div id="logged_user_name" style="width: 240px; line-height: 30px; float: left; text-align: right; font-weight: bold; font-size: 13px; padding-left: 20px;">&nbsp;Hi, Shivani</div>
+		<div style="float: left; width: 20px;">&nbsp;</div>
+        <div>
+        	<input style="cursor: pointer;" class="login" id="logout" value="Log Out" name="logout" onclick="window.location='logout.php'" type="button">
+        </div>
+        <div class="clr">&nbsp;</div>
+	</div>
+	</div>	</div>
+	<div class="midarea" style="height: auto; background-color: rgb(245, 244, 242);" id="top" align="center">
+		<div id="user_test_reivew" style="width: 98%; padding-top: 20px; padding-bottom: 10px;">
+			<div class="" id="exam_msg" style="padding: 5px; font-size: 13px; margin-top: 0px;">&nbsp;</div>
+		</div>
+		<div style="width: 600px;" align="center">
+			<div id="detailed_test_view" style="float: left; width: 600px; border: 1px solid; font-size: 12px; padding: 10px; margin-bottom: 10px;">
+				<form name="exam_form" id="exam_form">
+					<div class="report_header">
+						<div id="row">
+							<div id="column1" class="fl">
+								<div id="sub_column1" class="fl" style="width: 100px; text-align: left;">Patient Name:</div>
+								<div id="sub_column2" class="fl">Shivani  Mehta</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div id="row">
+							<div id="column1" class="fl">
+								<div id="sub_column1" class="fl" style="width: 100px; text-align: left;">Test:</div>
+								<div id="sub_column2" class="fl">PROBLEMS WITH YOUR SHOULDER</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div id="row">
+							<div id="column1" class="fl" style="width: 76%;">
+								<div id="sub_column1" class="fl" style="width: 100px; text-align: left;">Test Date:</div>
+								<div id="sub_column2" class="fl">29-08-2011</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div id="column1" class="fl" style="width: 22%; font-weight: bold;">
+								<div id="sub_column1" class="fl" style="text-align: right; width: 80%; padding-right: 10px;">Score:</div>
+								<div id="sub_column2" class="fl" style="text-align: right; width: 9%;"><span id="div_score" style="padding: 3px;">0</span></div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+					</div>
+					<div style="background-color: black; height: 1px;">&nbsp;</div>
+					<div class="report_content" style="text-align: left;">
+						<div style="line-height: 25px;">
+							<div class="fl" style="width: 50%;">During the past 4 weeks...</div>
+							<div class="fl" style="width: 49%; text-align: right;">tick <b>one</b> box for <b>every question</b></div>
+							<div class="clr">&nbsp;</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_0">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">1. </div>
+								<div class="fl" style="width: 93%;">How would you describe the worst pain you had
+from your shoulder?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option122">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_0" id="opt_of_0" value="25,122,5,0" onclick="updateScore(this,'0');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">None</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option123">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_0" id="opt_of_0" value="25,123,4,0" onclick="updateScore(this,'0');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Mild</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option124">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_0" id="opt_of_0" value="25,124,3,0" onclick="updateScore(this,'0');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Moderate</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option125">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_0" id="opt_of_0" value="25,125,2,0" onclick="updateScore(this,'0');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Severe</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option126">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_0" id="opt_of_0" value="25,126,1,0" onclick="updateScore(this,'0');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Unbearable</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_1">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">2. </div>
+								<div class="fl" style="width: 93%;">Have you had any trouble dressing yourself because of your shoulder?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option127">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_1" id="opt_of_1" value="26,127,5,1" onclick="updateScore(this,'1');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No trouble at all</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option128">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_1" id="opt_of_1" value="26,128,4,1" onclick="updateScore(this,'1');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">A little bit of trouble</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option129">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_1" id="opt_of_1" value="26,129,3,1" onclick="updateScore(this,'1');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Moderate trouble</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option130">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_1" id="opt_of_1" value="26,130,2,1" onclick="updateScore(this,'1');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Extreme difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option131">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_1" id="opt_of_1" value="26,131,1,1" onclick="updateScore(this,'1');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Impossible to do</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_2">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">3. </div>
+								<div class="fl" style="width: 93%;">Have you had any trouble getting in and out of a car or using
+public transport because of your shoulder?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option132">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_2" id="opt_of_2" value="27,132,5,2" onclick="updateScore(this,'2');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No trouble at all</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option133">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_2" id="opt_of_2" value="27,133,4,2" onclick="updateScore(this,'2');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">A little bit of trouble</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option134">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_2" id="opt_of_2" value="27,134,3,2" onclick="updateScore(this,'2');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Moderate trouble</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option135">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_2" id="opt_of_2" value="27,135,2,2" onclick="updateScore(this,'2');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Extreme difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option136">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_2" id="opt_of_2" value="27,136,1,2" onclick="updateScore(this,'2');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Impossible to do</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_3">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">4. </div>
+								<div class="fl" style="width: 93%;">Have you been able to use a knife and fork - at the same time?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option137">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_3" id="opt_of_3" value="28,137,5,3" onclick="updateScore(this,'3');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Yes, Easily</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option138">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_3" id="opt_of_3" value="28,138,4,3" onclick="updateScore(this,'3');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With little difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option139">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_3" id="opt_of_3" value="28,139,3,3" onclick="updateScore(this,'3');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With moderate difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option140">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_3" id="opt_of_3" value="28,140,2,3" onclick="updateScore(this,'3');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With extreme difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option141">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_3" id="opt_of_3" value="28,141,1,3" onclick="updateScore(this,'3');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No, Impossible</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_4">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">5. </div>
+								<div class="fl" style="width: 93%;">Could you do the household shopping on your own?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option142">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_4" id="opt_of_4" value="29,142,5,4" onclick="updateScore(this,'4');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Yes, Easily</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option143">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_4" id="opt_of_4" value="29,143,4,4" onclick="updateScore(this,'4');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With little difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option144">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_4" id="opt_of_4" value="29,144,3,4" onclick="updateScore(this,'4');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With moderate difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option145">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_4" id="opt_of_4" value="29,145,2,4" onclick="updateScore(this,'4');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With extreme difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option146">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_4" id="opt_of_4" value="29,146,1,4" onclick="updateScore(this,'4');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No, Impossible</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_5">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">6. </div>
+								<div class="fl" style="width: 93%;">Could you carry a tray containing a plate of food across a room?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option147">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_5" id="opt_of_5" value="30,147,5,5" onclick="updateScore(this,'5');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Yes, Easily</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option148">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_5" id="opt_of_5" value="30,148,4,5" onclick="updateScore(this,'5');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With little difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option149">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_5" id="opt_of_5" value="30,149,3,5" onclick="updateScore(this,'5');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With moderate difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option150">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_5" id="opt_of_5" value="30,150,2,5" onclick="updateScore(this,'5');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With extreme difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option151">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_5" id="opt_of_5" value="30,151,1,5" onclick="updateScore(this,'5');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No, Impossible</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_6">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">7. </div>
+								<div class="fl" style="width: 93%;">Could you brush/comb your hair with the affected arm?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option152">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_6" id="opt_of_6" value="31,152,5,6" onclick="updateScore(this,'6');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Yes, Easily</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option153">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_6" id="opt_of_6" value="31,153,4,6" onclick="updateScore(this,'6');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With little difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option154">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_6" id="opt_of_6" value="31,154,3,6" onclick="updateScore(this,'6');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With moderate difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option155">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_6" id="opt_of_6" value="31,155,2,6" onclick="updateScore(this,'6');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With extreme difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option156">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_6" id="opt_of_6" value="31,156,1,6" onclick="updateScore(this,'6');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No, Impossible</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_7">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">8. </div>
+								<div class="fl" style="width: 93%;">How would you describe the pain you usually had from your shoulder?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option157">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_7" id="opt_of_7" value="32,157,5,7" onclick="updateScore(this,'7');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">None</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option158">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_7" id="opt_of_7" value="32,158,4,7" onclick="updateScore(this,'7');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Mild</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option159">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_7" id="opt_of_7" value="32,159,3,7" onclick="updateScore(this,'7');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Moderate</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option160">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_7" id="opt_of_7" value="32,160,2,7" onclick="updateScore(this,'7');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Severe</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option161">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_7" id="opt_of_7" value="32,161,1,7" onclick="updateScore(this,'7');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Unbearable</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_8">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">9. </div>
+								<div class="fl" style="width: 93%;">Could you hang your clothes up in a wardrobe, - using the affected arm?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option162">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_8" id="opt_of_8" value="33,162,5,8" onclick="updateScore(this,'8');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Yes, Easily</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option163">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_8" id="opt_of_8" value="33,163,4,8" onclick="updateScore(this,'8');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With little difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option164">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_8" id="opt_of_8" value="33,164,3,8" onclick="updateScore(this,'8');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With moderate difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option165">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_8" id="opt_of_8" value="33,165,2,8" onclick="updateScore(this,'8');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With extreme difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option166">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_8" id="opt_of_8" value="33,166,1,8" onclick="updateScore(this,'8');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No, Impossible</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_9">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">10. </div>
+								<div class="fl" style="width: 93%;">Have you been able to wash and dry yourself under both arms?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option167">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_9" id="opt_of_9" value="34,167,5,9" onclick="updateScore(this,'9');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Yes, Easily</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option168">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_9" id="opt_of_9" value="34,168,4,9" onclick="updateScore(this,'9');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With little difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option169">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_9" id="opt_of_9" value="34,169,3,9" onclick="updateScore(this,'9');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With moderate difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option170">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_9" id="opt_of_9" value="34,170,2,9" onclick="updateScore(this,'9');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">With extreme difficulty</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option171">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_9" id="opt_of_9" value="34,171,1,9" onclick="updateScore(this,'9');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No, Impossible</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_10">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">11. </div>
+								<div class="fl" style="width: 93%;">How much has pain from your shoulder interfered with your usual work (including housework)?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option172">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_10" id="opt_of_10" value="35,172,5,10" onclick="updateScore(this,'10');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Not at all</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option173">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_10" id="opt_of_10" value="35,173,4,10" onclick="updateScore(this,'10');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">A little bit</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option174">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_10" id="opt_of_10" value="35,174,3,10" onclick="updateScore(this,'10');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Moderately</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option175">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_10" id="opt_of_10" value="35,175,2,10" onclick="updateScore(this,'10');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Greatly</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option176">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_10" id="opt_of_10" value="35,176,1,10" onclick="updateScore(this,'10');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Totally</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+											<div style="line-height: 22px; margin-bottom: 3px; border: 1px solid rgb(238, 238, 238); background-color: rgb(255, 255, 255);" id="question_answer_11">
+							<div class="question" style="width: 100%;">
+								<div class="fl" style="width: 6%; font-weight: bold;">12. </div>
+								<div class="fl" style="width: 93%;">Have you been troubled by pain from your shoulder in bed at night?</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+							<div class="answer">
+								<div class="fl" style="width: 98%;">
+									<div class="fl" style="width: 5%; font-weight: bold;">Ans. </div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option177">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_11" id="opt_of_11" value="36,177,5,11" onclick="updateScore(this,'11');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">No nights</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option178">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_11" id="opt_of_11" value="36,178,4,11" onclick="updateScore(this,'11');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Only 1 or 2 nights</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option179">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_11" id="opt_of_11" value="36,179,3,11" onclick="updateScore(this,'11');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Some nights</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option180">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_11" id="opt_of_11" value="36,180,2,11" onclick="updateScore(this,'11');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Most nights</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="fl" style="margin-left: 2px; width: 18.5%;" id="option181">
+										<div class="fl" style="width: 18%;">
+											<input name="opt_of_11" id="opt_of_11" value="36,181,1,11" onclick="updateScore(this,'11');" type="radio">
+										</div>
+										<div class="fl" style="width: 80%; padding-left: 2px;">Every night</div>
+										<div class="clr">&nbsp;</div>
+									</div>
+																		<div class="clr">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="report_footer">
+						<div>
+							<div class="fr">
+															<a href="#top">Go to TOP</a>
+							&nbsp;
+							</div>
+							<div class="fl">
+								<input name="sum" id="sum" value="0" type="hidden">
+								<input name="questionare_id" id="questionare_id" value="3" type="hidden">
+								<input style="cursor: pointer;" class="login" name="done" id="done" value="Done" onclick="checkAndSave();" type="button">
+								<input style="cursor: pointer;" class="login" id="back" value="Back" name="back" onclick="window.location='questionareslisting.php'" type="button">
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div style="position: relative; float: left;">
+				<div class="fl fixed_div">
+					<div class="fl" style="padding-left: 5px;">Test Score:</div>
+					<div id="fixed_div_score" style="">0</div>
+					<div class="clr">&nbsp;</div>
+				</div>
+			</div>
+			<div class="clr">&nbsp;</div>
+		</div>
+		<div class="indicator" id="indicator" align="center">&nbsp;</div>
+	</div>
+	<div class="footer">
+		<div style="float: left;">COPYRIGHT(C) 2010 <span style="color: rgb(0, 32, 123);">ORTHOSTATS.COM</span>  ALL RIGHTS RESERVED. </div>
+<div class="menu">
+	<ul>
+		<li><a href="#" class="img1">About Us</a></li>
+			<li><a href="#" class="img1">Disclaimer</a></li>
+			<li><a href="#" class="img3">Contact Us</a></li>
+        </ul>
+</div>	</div>
+</div>
+</body></html>

@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+
+
+	<title>Orthostat</title>
+	<link rel="stylesheet" type="text/css" href="registration_files/orthostate.css">
+<link rel="stylesheet" type="text/css" href="registration_files/jquery-ui-1.css">
+<link rel="stylesheet" type="text/css" href="registration_files/jquery.css">
+<link rel="stylesheet" type="text/css" href="registration_files/jquery_002.css">
+<link rel="stylesheet" type="text/css" href="registration_files/jquery_003.css">
+<link href="registration_files/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="registration_files/jquery-1.js"></script>
+<script type="text/javascript" src="registration_files/jquery-ui-1.js"></script>
+<script type="text/javascript" src="registration_files/jquery_003.js"></script>
+<script type="text/javascript" src="registration_files/jquery_002.js"></script>
+<script type="text/javascript" src="registration_files/jquery_004.js"></script>
+<script type="text/javascript" src="registration_files/jquery.js"></script>
+<script type="text/javascript" src="registration_files/crud.js"></script>
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">	<script type="text/javascript">
+
+		window.onload = function(){
+
+			$('#birthdate').datepicker({
+				changeMonth: true,
+				changeYear: true,
+				showOn: 'both',
+				buttonImage: 'images/calendar.gif',
+				buttonImageOnly: true
+			});
+			
+		};
+	</script>
+</head><body>
+<div class="mainarea">
+	<div class="header">
+		<div class="logo">
+		<div class="logo1" onclick="window.location='/orthostat/'" style="cursor: pointer;">&nbsp;</div>
+	<div class="email" id="logged_user">
+		<div class="clr">&nbsp;</div>
+	</div>
+	</div>	</div>
+	<div class="midarea">
+		<div class="center_div" align="center">
+			<div id="register_div">
+				<form name="registerupdate_form" id="registerupdate_form">
+					<div id="register_header" style="padding-top: 20px;">Update Profile</div>
+					<div class="add_row">
+						<div class="add_column">
+							<div class="field_div">
+								<div class="label fl">
+									First Name:
+								</div>
+								<div class="fl lalign">
+									<input name="first_name" id="first_name" errortag="First Name" value="Shivani" type="text">
+									<div id="first_name_error" class="error_div">&nbsp;</div>
+								</div>
+								<div class="clr">&nbsp;</div>
+							</div>
+						</div>
+						<div class="add_column">
+							<div class="label fl">
+								Middle Name:
+							</div>
+							<div class="fl lalign">
+								<input name="middle_name" id="middle_name" errortag="Middle Name" type="text">
+								<div id="middle_name_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="clr">&nbsp;</div>
+					</div>
+					<div class="add_row">
+						<div class="add_column">
+							<div class="label fl">
+								Last Name:
+							</div>
+							<div class="fl lalign">
+								<input name="last_name" id="last_name" errortag="Last Name" value="Mehta" type="text">
+								<div id="last_name_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="add_column">
+							<div class="label fl">
+								Gender:
+							</div>
+							<div class="fl lalign" align="left">
+								<div>
+									<span style="padding-right: 10px;">
+										<input name="gender" id="gender" value="male" errortag="Gender" type="radio"><img class="gender_image" src="registration_files/male.gif">
+									</span>
+									<span>
+										<input name="gender" id="gender" value="female" errortag="Gender" checked="checked" type="radio"><img class="gender_image" src="registration_files/female.gif">
+									</span>
+									<div id="gender_error" class="error_div">&nbsp;</div>
+								</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="clr">&nbsp;</div>
+					</div>
+					<div class="add_row">
+						<div class="add_column">
+							<div class="label fl">
+
+								Email:<br>(used for login)
+
+							</div>
+							<div class="fl lalign">
+								<input class="disable_input" name="user_name" id="user_name" errortag="Email" readonly="readonly" value="shivani.mehta@gmail.com" style="width: 142px;" type="text">
+								<div id="user_name_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="add_column">
+							<div class="label fl">
+								Date of Birth:
+							</div>
+							<div class="fl lalign">
+																<input class="hasDatepicker" name="birthdate" id="birthdate" errortag="Birthdate" style="margin-right: 3px;" readonly="readonly" type="text"><img title="Pick a date" alt="Pick a date" src="registration_files/calendar.gif" class="ui-datepicker-trigger">
+								<div id="birthdate_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="clr">&nbsp;</div>
+					</div>
+										<div class="add_row">
+						<div class="add_column">
+							<div class="label fl">
+								Address 1:
+							</div>
+							<div class="fl lalign">
+								<input name="address1" id="address1" errortag="Address1" type="text">
+								<div id="address1_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="add_column">
+							<div class="label fl">
+								Address 2:
+							</div>
+							<div class="fl lalign">
+								<input id="address2" name="address2" errortag="Address2" type="text">
+								<div id="address2_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="clr">&nbsp;</div>
+					</div>
+					<div class="add_row">
+						<div class="add_column">
+							<div class="label fl">
+								City:
+							</div>
+							<div class="fl lalign">
+								<input name="city" id="city" errortag="City" type="text">
+								<div id="city_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="add_column">
+							<div class="label fl">
+								State:
+							</div>
+							<div class="fl lalign">
+								<input name="state" id="state" errortag="State" type="text">
+								<div id="state_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="clr">&nbsp;</div>
+					</div>
+					<div class="add_row">
+						<div class="add_column">
+							<div class="label fl">
+								Country:
+							</div>
+							<div class="fl lalign">
+								<input name="country" id="country" errortag="Country" type="text">
+								<div id="country_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="add_column">
+							<div class="label fl">
+								Home Phone:
+							</div>
+							<div class="fl lalign">
+								<input name="home_phone" id="home_phone" errortag="Home Phone" value="0" type="text">
+								<div id="home_phone_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="clr">&nbsp;</div>
+					</div>
+					<div class="add_row">
+						<div class="add_column">
+							<div class="label fl">
+								Mobile:
+							</div>
+							<div class="fl lalign">
+								<input name="mobile" id="mobile" errortag="Mobile" value="0" type="text">
+								<div id="mobile_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="add_column">
+							<div class="label fl">
+								Office Phone:
+							</div>
+							<div class="fl lalign">
+								<input name="office_phone" id="office_phone" errortag="Office Phone" value="0" type="text">
+								<div id="office_phone_error" class="error_div">&nbsp;</div>
+							</div>
+							<div class="clr">&nbsp;</div>
+						</div>
+						<div class="clr">&nbsp;</div>
+					</div>
+					<div>
+						<input name="aurtostate_submit" id="aurtostate_submit" value="Submit" onclick="saveForm('verifyregister.php','registerupdate_form');" type="button">
+						<input name="aurtostate_cancel" id="aurtostate_cancel" value="Cancel" onclick="window.location='index.php';" type="button">
+					</div>
+				</form>
+			</div>
+			<div class="indicator" id="indicator" align="center">&nbsp;</div>
+		</div>
+	</div>
+	<div class="footer">
+		<div style="float: left;">COPYRIGHT(C) 2010 <span style="color: rgb(0, 32, 123);">ORTHOSTATS.COM</span>  ALL RIGHTS RESERVED. </div>
+<div class="menu">
+	<ul>
+		<li><a href="#" class="img1">About Us</a></li>
+			<li><a href="#" class="img1">Disclaimer</a></li>
+			<li><a href="#" class="img3">Contact Us</a></li>
+        </ul>
+</div>	</div>
+</div>
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all ui-helper-hidden-accessible"></div></body></html>
