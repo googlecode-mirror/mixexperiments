@@ -3,6 +3,15 @@ include_once 'config.php';
 include_once 'core.php';
 
 $obj = new CORE();
+
+//$obj->ConnectionOpen();
+//$sql = 'select * from author_master where author_master_id=6131';
+//$res = mysql_query($sql);
+//$data = mysql_fetch_assoc($res);
+//$auth_name = $data['author_name'];
+//echo $auth_name;
+//$obj->ConnectionOpen();
+//exit;
 ?>
 <html>
 <head>
@@ -25,14 +34,19 @@ p,.imp{
 					};
 
 	GetTableFields = function (id,value){
-						$.ajax({
-							url:'control/ajaxprocess.php',
-							type:'post',
-							data:'act=getfield&table='+value,
-							success:function(response){
-								$('#'+id).html(response);
-							}
-						});
+						if(value!=''){
+							$.ajax({
+								url:'control/ajaxprocess.php',
+								type:'post',
+								data:'act=getfield&table='+value,
+								success:function(response){
+									$('#'+id).html(response);
+								}
+							});
+						}else{
+							response = "<option value=''>-- Select --</option>";
+							$('#'+id).html(response);
+						}
 					};
 </script>	
 </head>
@@ -51,18 +65,13 @@ p,.imp{
 			<td colspan="2" class="imp"><?php echo $obj->GetDb();?></td>
 		</tr>
 		<tr>
-			<td>Segment: </td>
-			<td>
-				<input type="text" name='segment' id='segment' errortag='Segment'/>
-			</td>
-			<td><p id='segment_error'></p></td>
-		</tr>
-		<tr>
 			<td>Table: </td>
 			<td>
-				<select name='table' id='table' onchange="GetTableFields('table_fields',this.value);">
+				<select name='segment' id='segment' onchange="GetTableFields('dbcolumn',this.value);" errortag='Table'>
+				
 				<?php 
 					$tables = $obj->FetchTables($obj->GetDb(), "products_%",array());
+					
 					echo $obj->GenerateOptions($tables, array());
 				?>
 				</select>
@@ -72,17 +81,9 @@ p,.imp{
 		<tr>
 			<td>Table Fields: </td>
 			<td>
-				<select name='table_fields' id='table_fields'>
+				<select name='dbcolumn' id='dbcolumn' errortag='Column'>
 					<option value="">-- Select --</option>
 				</select>
-			</td>
-			<td><p id='segment_error'></p></td>
-		</tr>
-		<tr>
-			<td>DB Column: </td>
-			<td>
-				<input type="text" name='dbcolumn' id='dbcolumn' errortag='DB column'/>
-				
 			</td>
 			<td><p id='dbcolumn_error'></p></td>
 		</tr>

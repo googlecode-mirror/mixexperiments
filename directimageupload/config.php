@@ -1,8 +1,8 @@
 <?php 
 /**
- * Created By: aNKIT kHAMBHATA
+ * Created By: Rajan Rawal
  * Created Date: 9th Feb 2011
- * Modified By:  aNKIT kHAMBHATA
+ * Modified By:  Rajan Rawal
  * Modified Date: 17th of June 2011
  * @desc:  This is the database connection file contain database connection details
  * ls .			                                           
@@ -14,7 +14,7 @@ date_default_timezone_set('Asia/Calcutta');
  * @author: aNKIT kHAMBHATA
  * @desc: Database Connection File 
  */
-class  CONFIG {
+class CONFIG {
 	private $hostname;
 	private $username;
 	private $password;
@@ -49,10 +49,6 @@ class  CONFIG {
 								echo "Database Not Connected";
 							}
 					} // end of connectionopen
-	/**
-	 * @author: aNKIT kHAMBHATa
-	 * @desc: This function is used to terminate the connection with database 
-	 */
 	public function ConnectionClose() { 
 						@mysql_close($this->connect);
 					}

@@ -16,8 +16,8 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 	//Gathering Other validation data
 	$neglect = array();
 	$dbcolumns = array();
-	$table = 'products_'.$segment;
-	$tables = $val->FetchTables($val->GetDb(), $neglect);
+	$table = $segment;
+	$tables = $val->FetchTables($val->GetDb(), 'products_%',$neglect);
 	if($dbcolumn!=''){
 		$dbcolumns = $val->FetchTableField($table, $neglect);
 	}

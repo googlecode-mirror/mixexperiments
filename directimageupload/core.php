@@ -14,7 +14,7 @@ class CORE extends CONFIG{
 						}else{
 							$sql="SHOW TABLES FROM $database like '$condition'";
 						}
-						//echo $sql;exit;
+						//echo $sql;
 						$res=mysql_query($sql);
 							while($data=@mysql_fetch_assoc($res)) {
 								if($condition==''){
@@ -87,8 +87,9 @@ class CORE extends CONFIG{
 						$data1=mysql_real_escape_string(trim($data));
 						return $data1;
 					}
-	function GenerateOptions($key = array(),$value = array()){
+	public function GenerateOptions($key = array(),$value = array()){
 		$options = array();
+		
 		if($value == '' || sizeof($value)==0){
 			$options = array_combine($key, $key);
 		}else{

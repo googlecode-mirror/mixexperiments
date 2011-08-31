@@ -14,8 +14,9 @@
 	$con = $obj->ConnectionOpen();
 	if(isset($_POST) && $_POST!=''){
 		
-		$segment = trim($_POST['segment']);
-		$table = 'products_'.$segment;
+		$table = trim($_POST['segment']);
+		$extr_segment = explode('_', $table);
+		$segment = $extr_segment[sizeof($extr_segment)-1];
 		$dbcolumn = trim($_POST['dbcolumn']);
 		
 		$path = trim($_POST['path']);
