@@ -1,0 +1,107 @@
+/* skeletoy */
+div#skelebg {
+  background:url("../images/skeleton.jpg") no-repeat left top transparent;
+  height:550px;
+  position:relative;
+  width:521px;
+}
+div.skelebutton a {
+  display:block;
+  height:40px;
+  position:absolute;
+  width:84px;
+}
+div.skelespot a {
+  height:61px;
+  position:absolute;
+  width:61px;
+}
+a#skelebutton_0 {left:1px;top:78px;}
+a#skelespot_0 {left:166px;top:71px;}
+a#skelespot_0:hover, a#skelespot_0.over {
+  background:url("../images/shoulder-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_0:hover, a#skelebutton_0.over{
+  background:url("../images/shoulder-hover.jpg") no-repeat left top;
+}
+a#skelebutton_1 {left:14px;top:158px;width:71px}
+a#skelespot_1 {left:141px;top:149px;}
+a#skelespot_1:hover, a#skelespot_1.over {
+  background:url("../images/elbow-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_1:hover, a#skelebutton_1.over{
+  background:url("../images/elbow-hover.jpg") no-repeat left top;
+}
+a#skelebutton_2 {left:14px;top:236px;width:71px}
+a#skelespot_2 {left:109px;top:232px;}
+a#skelespot_2:hover, a#skelespot_2.over {
+  background:url("../images/hand-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_2:hover, a#skelebutton_2.over{
+  background:url("../images/hand-hover.jpg") no-repeat left top;
+}
+a#skelebutton_3 {left:33px;top:297px;width:52px}
+a#skelespot_3 {left:185px;top:193px;}
+a#skelespot_3:hover, a#skelespot_3.over {
+  background:url("../images/hip-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_3:hover, a#skelebutton_3.over{
+  background:url("../images/hip-hover.jpg") no-repeat left top;
+}
+a#skelebutton_4 {left:22px;top:352px;width:63px}
+a#skelespot_4 {left:179px;top:341px;}
+a#skelespot_4:hover, a#skelespot_4.over {
+  background:url("../images/knee-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_4:hover, a#skelebutton_4.over{
+  background:url("../images/knee-hover.jpg") no-repeat left top;
+}
+a#skelebutton_5 {left:22px;top:479px;width:63px}
+a#skelespot_5 {left:162px;top:473px;}
+a#skelespot_5:hover, a#skelespot_5.over {
+  background:url("../images/foot-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_5:hover, a#skelebutton_5.over{
+  background:url("../images/foot-hover.jpg") no-repeat left top;
+}
+a#skelebutton_6 {left:410px;top:42px;width:71px}
+a#skelespot_6 {left:217px;top:41px;}
+a#skelespot_6:hover, a#skelespot_6.over {
+  background:url("../images/neck-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_6:hover, a#skelebutton_6.over{
+  background:url("../images/neck-hover.jpg") no-repeat left top;
+}
+a#skelebutton_7 {left:410px;top:170px;width:109px}
+a#skelespot_7 {left:218px;top:159px;}
+a#skelespot_7:hover, a#skelespot_7.over {
+  background:url("../images/back-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_7:hover, a#skelebutton_7.over{
+  background:url("../images/back-hover.jpg") no-repeat left top;
+}
+a#skelebutton_8 {left:410px;top:223px;width:71px}
+a#skelespot_8 {left:319px;top:222px;}
+a#skelespot_8:hover, a#skelespot_8.over {
+  background:url("../images/wrist-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_8:hover, a#skelebutton_8.over{
+  background:url("../images/wrist-hover.jpg") no-repeat left top;
+}
+a#skelebutton_9 {left:410px;top:275px;width:77px}
+a#skelespot_9 {left:334px;top:264px;}
+a#skelespot_9:hover, a#skelespot_9.over {
+  background:url("../images/fingers-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_9:hover, a#skelebutton_9.over{
+  background:url("../images/fingers-hover.jpg") no-repeat left top;
+}
+a#skelebutton_10 {left:410px;top:459px;width:77px;}
+a#skelespot_10 {left:260px;top:460px;}
+a#skelespot_10:hover, a#skelespot_10.over {
+  background:url("../images/ankle-zoom.png") no-repeat left top transparent;
+}
+a#skelebutton_10:hover, a#skelebutton_10.over{
+  background:url("../images/ankle-hover.jpg") no-repeat left top;
+}
+.no_display{display:none}
