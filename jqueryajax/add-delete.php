@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author: Rajan Rawal
+ * @desc: This file add, delete or update the record in the db table using AJAX
+ */
 $link = mysql_connect('192.168.0.73','root','binary') or die(mysql_error());
 $db = mysql_selectdb('sample',$link);
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest'){
@@ -14,8 +18,9 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 			echo "Student Already Exists";
 		}else{
 			// Insert data if student does not exist
-			$slq = "INSERT INTO student_master (roll_no,name)values('$roll_no','$name')";
-			$insert = mysql_query($slq);
+			$sql = "INSERT INTO student_master (roll_no,name)values('$roll_no','$name')";
+			echo $sql;exit;
+			$insert = mysql_query($sql);
 			$id = mysql_insert_id();
 			if($insert){
 				echo $id;
