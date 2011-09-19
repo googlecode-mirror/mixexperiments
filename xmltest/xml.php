@@ -185,5 +185,28 @@ class Xml2Assoc {
 			}
 		}
 	}
+	
+	public function xml2assocTagsChildsAttrs($xml) {
+		
+		$assoc = null;
+		while($xml->read()){
+			switch ($xml->nodeType) {
+				case XMLReader::END_ELEMENT: 
+					return $assoc;
+				case XMLReader::ELEMENT:
+					$assoc[$xml->name][] = array('value' => $xml->isEmptyElement ? '' : $this->xml2assocTagsChildsAttrs($xml));
+					if($xml->hasAttributes){
+						$el =& $assoc[$xml->name][count($assoc[$xml->name]) - 1];
+						while($xml->moveToNextAttribute()){
+							$el['attributes'][$xml->name] = $xml->value;
+						}
+					}
+	            	break;
+				case XMLReader::TEXT:
+				case XMLReader::CDATA: $assoc .= $xml->value;
+			}
+		}
+		return $assoc;
+	}
 }
 ?> 
