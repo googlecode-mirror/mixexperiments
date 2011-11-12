@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<title>Pure CSS Menus</title>
+<style type="text/css">
+#shoppingcart ul {padding: 0; margin: 0;}
+#shoppingcart ul li {list-style-type: none; border: 1px solid #266dbb; position: relative; margin: 0; padding: 0;}
+#shoppingcart ul ul {display: none;}
+#shoppingcart ul li:hover > ul {display: block; position: absolute; top: -1px; left: 100%;}
+#shoppingcart li a {display: block; padding: 5px 7px; text-decoration: none; color:#ffffff;}
+#shoppingcart ul#topmenu li a:hover {background:#266dbb; color:#ffffff;}
+#shoppingcart li.sub > a {background:#266dbb; width:244px; text-align:right;}
+div#shoppingcart { padding: 0; }
+#shoppingcart ul#topmenu {width:260px; font-family:Verdana, Geneva, sans-serif; font-size:15px;}
+#shoppingcart ul#topmenu > li:hover > ul {width:260px; top:38px; left:-1px;}
+.cart{padding:5px; width:244px; border:2px solid #266dbb; overflow:hidden; font-size:14px;}
+.box1{width:35px; height:35px; background-color:#266dbb; float:left;}
+.box2{float:left; margin-left:10px;}
+.cl{clear:both; height:10px;}
+.totalbox{background-color:#266dbb; width:248px; padding:10px 5px; color:#ffffff; font-size:12px; font-weight:bold;}
+</style>
+</head>
+<body>
+
+<div id="shoppingcart">
+    <ul id="topmenu">
+        <li class="sub"><a href=""><img src="images/cart.jpg" border="0" />&nbsp;&nbsp;Cart(2)</a>
+            <ul>
+                <li>
+                	<div class="cart">
+                    	<img src="images/box.jpg" style="float:left;" />
+                        <div class="box2">Tital of the Product<br> Rs. 500/-</div>
+                        <div class="cl"></div>
+                        <img src="images/box.jpg" style="float:left;" />
+                        <div class="box2">Tital of the Product<br> Rs. 500/-</div>
+                        <div class="cl"></div>
+                        <img src="images/box.jpg" style="float:left;" />
+                        <div class="box2">Tital of the Product<br> Rs. 500/-</div>
+                    </div>
+                    <div class="totalbox">Total Rs. 100000/- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; View Cart &raquo;</div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
