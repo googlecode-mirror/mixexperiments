@@ -9,7 +9,6 @@ if ((($_FILES["file"]["type"] == "image/gif")
     	echo "Error: " . $_FILES["file"]["error"] . "<br />";
     }else{
     	
-    	
 	    copy($_FILES['file']['tmp_name'], 'upload/'.$_FILES["file"]["name"]);
 	    echo "Upload: " . $_FILES["file"]["name"] . "<br />";
 	    echo "Type: " . $_FILES["file"]["type"] . "<br />";
