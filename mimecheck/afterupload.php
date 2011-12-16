@@ -18,9 +18,9 @@ if ((($_FILES["file"]["type"] == "image/gif")
 	    //$img_info = getimagesize('upload/'.$_FILES["file"]["name"]);
 	    $img_info = getimagesize($_FILES['file']['tmp_name']);
     	
-    	echo 'Image Info:'.$img_info['mime'];
-    	if(sizeof($img_info)==0){
-    		echo "Invalid file";
+    	//echo 'Image Info:'.;
+    	if(!isset($img_info['mime']) || $img_info['mime']==''){
+    		echo "<br>Invalid file, Invalid MIME";
     	}else{
     		echo "<pre>Image Info: ";
 	    	print_r($img_info); 
