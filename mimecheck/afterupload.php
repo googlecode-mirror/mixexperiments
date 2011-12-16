@@ -15,10 +15,17 @@ if ((($_FILES["file"]["type"] == "image/gif")
 	    echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
 	    echo "Stored in: Upload folder";
 	    
-	    $img_info = getimagesize('upload/'.$_FILES["file"]["name"]);
-    	echo "<pre>Image Info: ";
-    	print_r($img_info); 
-    	echo "</pre>";
+	    //$img_info = getimagesize('upload/'.$_FILES["file"]["name"]);
+	    $img_info = getimagesize($_FILES['file']['tmp_name']);
+    	
+    	echo 'Image Info:'.$img_info['mime'];
+    	if(sizeof($img_info)==0){
+    		echo "Invalid file";
+    	}else{
+    		echo "<pre>Image Info: ";
+	    	print_r($img_info); 
+	    	echo "</pre>";
+    	}
     }
 }else{
 	
