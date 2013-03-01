@@ -3,7 +3,7 @@
  * @author: Rajan Rawal
  * @desc: This file add, delete or update the record in the db table using AJAX
  */
-$link = mysql_connect('192.168.0.73','root','binary') or die(mysql_error());
+$link = mysql_connect('localhost','root','') or die(mysql_error());
 $db = mysql_selectdb('sample',$link);
 if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])=='xmlhttprequest'){
 	$act = $_POST['act'];

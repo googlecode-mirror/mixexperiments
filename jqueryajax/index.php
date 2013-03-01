@@ -142,7 +142,7 @@
 	<body>
 		<div id='div_connect'>
 		<?php 
-			$link = mysql_connect('192.168.0.73','root','binary') or die(mysql_error());
+			$link = mysql_connect('localhost','root','') or die(mysql_error());
 			$db = mysql_selectdb('sample',$link);
 			
 			if($db){
